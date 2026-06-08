@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Find Your Seat</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#FFF8E7;
+    color:#000;
+    font-family:'Inter', sans-serif;
+}
+
+.container{
+    width:90%;
+    max-width:700px;
+    text-align:center;
+}
+
+h1{
+    font-family:'Playfair Display', serif;
+    font-size:3rem;
+    font-weight:600;
+    margin-bottom:16px;
+}
+
+.subtitle{
+    font-size:1rem;
+    margin-bottom:40px;
+    opacity:.75;
+}
+
+.search-box{
+    width:100%;
+    padding:20px 28px;
+    border:none;
+    border-radius:999px;
+    background:white;
+    font-size:1rem;
+    box-shadow:
+        0 4px 20px rgba(0,0,0,.05);
+    outline:none;
+}
+
+.search-box:focus{
+    box-shadow:
+        0 8px 30px rgba(0,0,0,.08);
+}
+
+.results{
+    margin-top:25px;
+}
+
+.result-card{
+    background:white;
+    border-radius:24px;
+    padding:28px;
+    text-align:left;
+    margin-bottom:15px;
+    box-shadow:
+        0 4px 20px rgba(0,0,0,.05);
+}
+
+.name{
+    font-size:1.2rem;
+    font-weight:600;
+    margin-bottom:10px;
+}
+
+.table{
+    font-size:1rem;
+}
+
+.not-found{
+    margin-top:20px;
+    font-size:.95rem;
+}
+
+.footer{
+    margin-top:40px;
+    opacity:.5;
+    font-size:.9rem;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Find Your Seat</h1>
+
+    <p class="subtitle">
+        Welcome to our celebration
+    </p>
+
+    <input
+        type="text"
+        id="searchInput"
+        class="search-box"
+        placeholder="Search your name..."
+    >
+
+    <div id="results" class="results"></div>
+
+    <div class="footer">
+        We can't wait to celebrate with you.
+    </div>
+
+</div>
+
+<script>
+
+const guests = [
+
+    { name: "Juan Dela Cruz", table: "Table 1" },
+    { name: "Maria Santos", table: "Table 1" },
+    { name: "Pedro Reyes", table: "Table 2" },
+    { name: "Ana Garcia", table: "Table 3" }
+
+];
+
+const searchInput = document.getElementById('searchInput');
+const results = document.getElementById('results');
+
+searchInput.addEventListener('input', () => {
+
+    const query = searchInput.value
+        .trim()
+        .toLowerCase();
+
+    results.innerHTML = '';
+
+    if(!query) return;
+
+    const matches = guests.filter(g =>
+        g.name.toLowerCase().includes(query)
+    );
+
+    if(matches.length === 0){
+
+        results.innerHTML =
+        `<div class="not-found">
+            No guest found.
+        </div>`;
+
+        return;
+    }
+
+    matches.forEach(guest => {
+
+        results.innerHTML += `
+        <div class="result-card">
+            <div class="name">${guest.name}</div>
+            <div class="table">${guest.table}</div>
+        </div>
+        `;
+
+    });
+
+});
+
+</script>
+
+</body>
+</html>
